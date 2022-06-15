@@ -1,5 +1,4 @@
 import { useState, useLayoutEffect } from 'react'
-
 import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import { gql } from '@apollo/client'
