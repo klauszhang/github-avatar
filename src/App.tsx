@@ -18,7 +18,6 @@ export const avatarQuery = gql`
   }
 `
 
-
 const padding = 5
 
 const AppWrapper = styled.div({
