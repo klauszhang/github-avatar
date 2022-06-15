@@ -6,7 +6,7 @@ This is a tiny page that allows you to browse what market listing Github has.
 
 ## How to run
 
-Create a new (Github access token)[https://github.com/settings/tokens] and add it to your .env file.
+Create a new [Github access token](https://github.com/settings/tokens) and add it to your .env file.
 
 You will need to add `repo` access to it.
 
