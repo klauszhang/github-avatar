@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Card, CardMedia, CardContent, Typography } from '@mui/material'
-import { color } from '@mui/system'
+import { Box, Card, CardMedia, CardContent } from '@mui/material'
+import EllipsisContentTypographyProps from './EllipsisContentTypography'
 
 interface AvatarCardProps {
   cardName: string
@@ -46,10 +46,12 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
       </Box>
       <CardContent sx={{ p: 3, width: '100%' }}>
         <Box>
-          <Typography variant="h6" sx={{ mb: 1 }}>
+          <EllipsisContentTypographyProps variant="h6" sx={{ mb: 1 }} lines={2}>
             {cardName}
-          </Typography>
-          <Typography variant="body1">{description}</Typography>
+          </EllipsisContentTypographyProps>
+          <EllipsisContentTypographyProps variant="body1" lines={3}>
+            {description}
+          </EllipsisContentTypographyProps>
         </Box>
       </CardContent>
     </Card>
