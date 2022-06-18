@@ -2,6 +2,9 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 
 interface EllipsisContentTypographyProps extends TypographyProps {
+  /**
+   * The number of lines to show.
+   */
   lines: number
 }
 
