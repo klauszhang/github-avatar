@@ -10,7 +10,9 @@ export const avatarQuery = gql`
         cursor
         node {
           logoUrl
+          logoBackgroundColor
           name
+          shortDescription
         }
       }
     }
@@ -27,10 +29,16 @@ function App() {
     <Container maxWidth="xl">
       <Grid container columnSpacing={2} rowSpacing={4}>
         {data.marketplaceListings.edges.map((d: any) => {
-          const { logoUrl, name } = d.node
+          const { logoUrl, logoBackgroundColor, name, shortDescription } =
+            d.node
           return (
             <Grid item xs={12} sm={6} md={4} lg={3} key={d.cursor}>
-              <AvatarCard cardName={name} logoUrl={logoUrl} />
+              <AvatarCard
+                cardName={name}
+                imgUrl={logoUrl}
+                imgBgColor={logoBackgroundColor}
+                description={shortDescription}
+              />
             </Grid>
           )
         })}
