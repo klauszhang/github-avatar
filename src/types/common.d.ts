@@ -18,3 +18,9 @@ export type DataFields<T> = {
     __typename: string
   }
 }
+
+export type MarketplaceListingProps = {
+  id: string
+  name: string
+  logoUrl: string
+}
