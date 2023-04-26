@@ -12,6 +12,8 @@ function App() {
   }
 
   return (
+    // TODO: This should be moved in a containers/components structure to
+    // improve reusability, scalability and separation of concerns
     <AppWrapper>
       {dataList.map((item) => (
         <Wrapper key={item.id}>
