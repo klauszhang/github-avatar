@@ -1,21 +1,7 @@
-import { useState, useLayoutEffect } from 'react'
-import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
-import { gql } from '@apollo/client'
-
-export const avatarQuery = gql`
-  query MarketPlaceQuery {
-    marketplaceListings(first: 40) {
-      edges {
-        cursor
-        node {
-          logoUrl
-          name
-        }
-      }
-    }
-  }
-`
+import useLoadMore from './hooks/useLoadMore'
+import { MARKETPLACE_LISTINGS_QUERY } from './api/queries/github'
+import { MarketplaceListingProps } from './types/common'
 
 const padding = 5
 
@@ -59,49 +45,27 @@ const Title = styled.h5({
 })
 
 function App() {
-  const { loading, error, data } = useQuery(avatarQuery)
-  const [[columCount, rowCount], setSize] = useState([0, 0])
+  const { dataList, loading, error, handleLoadMore } =
+    useLoadMore<MarketplaceListingProps>(MARKETPLACE_LISTINGS_QUERY)
 
-  useLayoutEffect(() => {
-    function updateSize() {
-      if (loading) return
-      if (error) return
-      const columCount = Math.floor(window.innerWidth / cardWidth)
-      const rowCount = Math.ceil(
-        data.marketplaceListings.edges.length / columCount
-      )
-
-      setSize([columCount, rowCount])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [data, loading, error])
-
-  if (loading) return <div>loading...</div>
-  if (error) return <div>error</div>
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <AppWrapper>
-      {Array.from({ length: rowCount }).map((_, rowIndex) => {
-        return (
-          <Row key={rowIndex}>
-            {data.marketplaceListings.edges
-              .slice(rowIndex * columCount, (rowIndex + 1) * columCount)
-              .map((d: any) => {
-                const { logoUrl, name } = d.node
-                return (
-                  <Wrapper key={d.cursor}>
-                    <Title>{name}</Title>
-                    <ImageWrapper>
-                      <Image src={logoUrl} alt="avatar" />
-                    </ImageWrapper>
-                  </Wrapper>
-                )
-              })}
-          </Row>
-        )
-      })}
+      {dataList.map((item) => (
+        <Wrapper key={item.id}>
+          <Title>{item.name}</Title>
+          <ImageWrapper>
+            <Image src={item.logoUrl} alt="avatar" />
+          </ImageWrapper>
+        </Wrapper>
+      ))}
+      {loading && <div>Loading...</div>}
+      {handleLoadMore && !loading && (
+        <button onClick={handleLoadMore}>Load more</button>
+      )}
     </AppWrapper>
   )
 }
