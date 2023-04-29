@@ -1,108 +1,23 @@
-import { useState, useLayoutEffect } from 'react'
-import { useQuery } from '@apollo/client'
-import styled from 'styled-components'
-import { gql } from '@apollo/client'
-
-export const avatarQuery = gql`
-  query MarketPlaceQuery {
-    marketplaceListings(first: 40) {
-      edges {
-        cursor
-        node {
-          logoUrl
-          name
-        }
-      }
-    }
-  }
-`
-
-const padding = 5
-
-const AppWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-const Row = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-})
-
-export const iconWidth = 120
-
-export const borderWidth = 1
-export const cardWidth = 120 + borderWidth * 2
-
-const Wrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  border: `${borderWidth}px solid #ccc`,
-  width: iconWidth,
-})
-
-const ImageWrapper = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding,
-})
-
-const Image = styled.img({
-  width: iconWidth - padding * 2,
-  height: iconWidth - padding * 2,
-})
-
-const Title = styled.h5({
-  overflow: 'hidden',
-})
+import * as styled from './styles/App.styled'
+import { useGetListings } from './hooks/useGetListings'
+import { AvatarCard } from './components/AvatarCard'
 
 function App() {
-  const { loading, error, data } = useQuery(avatarQuery)
-  const [[columCount, rowCount], setSize] = useState([0, 0])
-
-  useLayoutEffect(() => {
-    function updateSize() {
-      if (loading) return
-      if (error) return
-      const columCount = Math.floor(window.innerWidth / cardWidth)
-      const rowCount = Math.ceil(
-        data.marketplaceListings.edges.length / columCount
-      )
-
-      setSize([columCount, rowCount])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [data, loading, error])
+  const { loading, error, data } = useGetListings()
 
   if (loading) return <div>loading...</div>
   if (error) return <div>error</div>
+  if (!data) return <div>No data available</div>
 
   return (
-    <AppWrapper>
-      {Array.from({ length: rowCount }).map((_, rowIndex) => {
+    <styled.AppWrapper>
+      {data.marketplaceListings.edges.map((d: any) => {
+        const { logoUrl, name, url } = d.node
         return (
-          <Row key={rowIndex}>
-            {data.marketplaceListings.edges
-              .slice(rowIndex * columCount, (rowIndex + 1) * columCount)
-              .map((d: any) => {
-                const { logoUrl, name } = d.node
-                return (
-                  <Wrapper key={d.cursor}>
-                    <Title>{name}</Title>
-                    <ImageWrapper>
-                      <Image src={logoUrl} alt="avatar" />
-                    </ImageWrapper>
-                  </Wrapper>
-                )
-              })}
-          </Row>
+          <AvatarCard key={d.cursor} name={name} logoUrl={logoUrl} url={url} />
         )
       })}
-    </AppWrapper>
+    </styled.AppWrapper>
   )
 }
 
