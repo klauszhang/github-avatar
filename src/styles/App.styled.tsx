@@ -8,9 +8,3 @@ export const AppWrapper = styled.div({
   padding: '1rem 2rem',
   margin: '0 auto',
 })
-
-export const Row = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-  gap: '10px',
-})

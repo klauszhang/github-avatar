@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const iconSizing = 80
 
 export const CardTitle = styled.h3({
-    textAlign: 'center'
+  textAlign: 'center',
 })
 
 export const CardIconWrapper = styled.div({
@@ -19,5 +19,8 @@ export const CardIcon = styled.img({
 })
 
 export const CardLink = styled.a({
-  appearance: 'none',
+  textDecoration: 'none',
+  "&:hover": {
+    textDecoration: 'underline'
+  }
 })
