@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createTheme, Theme } from '@mui/material'
 
 /**
@@ -9,14 +8,30 @@ import { createTheme, Theme } from '@mui/material'
  */
 const theme: Theme = createTheme({
   components: {
+    MuiCardHeader: {
+      styleOverrides: {
+        title: {
+          fontSize: 16,
+        },
+      },
+    },
+    MuiCardMedia: {
+      styleOverrides: {
+        img: {
+          height: 80,
+          width: 80,
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
           minWidth: '250px',
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'center',
           boxSizing: 'border-box',
-          padding: '10px 0'
+          padding: '10px 0',
         },
       },
     },
