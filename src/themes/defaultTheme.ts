@@ -9,8 +9,6 @@ import { createTheme, Theme } from '@mui/material'
  */
 const theme: Theme = createTheme({
   components: {
-    MuiCardHeader: {},
-    MuiCardMedia: {},
     MuiCard: {
       styleOverrides: {
         root: {
