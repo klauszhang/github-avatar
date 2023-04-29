@@ -11,12 +11,19 @@ function App() {
 
   return (
     <styled.AppWrapper>
-      {data.marketplaceListings.edges.map((d: any) => {
-        const { logoUrl, name, url } = d.node
-        return (
-          <AvatarCard key={d.cursor} name={name} logoUrl={logoUrl} url={url} />
-        )
-      })}
+      <styled.MarketListings>
+        {data.marketplaceListings.edges.map((d: any) => {
+          const { logoUrl, name, url } = d.node
+          return (
+            <AvatarCard
+              key={d.cursor}
+              name={name}
+              logoUrl={logoUrl}
+              url={url}
+            />
+          )
+        })}
+      </styled.MarketListings>
     </styled.AppWrapper>
   )
 }
