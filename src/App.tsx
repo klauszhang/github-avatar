@@ -1,11 +1,18 @@
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
-import { Container, Grid } from '@mui/material'
+import { Container, Grid, Pagination } from '@mui/material'
 import AvatarCard from './components/AvatarCard'
+import { useState } from 'react'
 
-export const avatarQuery = gql`
+const COUNT_PER_PAGE = 40
+
+function getAvatarQuery(page: number) {
+  const offset = (page - 1) * COUNT_PER_PAGE
+
+  return gql`
   query MarketPlaceQuery {
-    marketplaceListings(first: 40) {
+    marketplaceListings(first: ${COUNT_PER_PAGE}, offset: ${offset}) {
+      totalCount,
       edges {
         cursor
         node {
@@ -18,15 +25,24 @@ export const avatarQuery = gql`
     }
   }
 `
+}
 
 function App() {
-  const { loading, error, data } = useQuery(avatarQuery)
+  const [currentPage, setCurrentPage] = useState(1)
+  const { loading, error, data } = useQuery(getAvatarQuery(currentPage))
 
   if (loading) return <div>loading...</div>
   if (error) return <div>error</div>
 
+  const numberOfPages = Math.ceil((data?.marketplaceListings?.totalCount || 1) / COUNT_PER_PAGE)
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page)
+  }
+
   return (
     <Container maxWidth="xl">
+      <Pagination count={numberOfPages} onChange={handlePageChange} page={currentPage} />
       <Grid container columnSpacing={2} rowSpacing={4}>
         {data.marketplaceListings.edges.map((d: any) => {
           const { logoUrl, logoBackgroundColor, name, shortDescription } =
@@ -43,6 +59,7 @@ function App() {
           )
         })}
       </Grid>
+      <Pagination count={numberOfPages} onChange={handlePageChange} page={currentPage} />
     </Container>
   )
 }
