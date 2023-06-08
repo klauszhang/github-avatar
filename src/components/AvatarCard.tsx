@@ -25,6 +25,9 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         maxWidth: 400,
+        maxHeight: 600, 
+        minWidth: 300, 
+        minHeight: 400, 
         borderRadius: 5,
       }}
     >
