@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
-import { Container, Grid, Button, Box, LinearProgress } from '@mui/material'
+import { Container, Grid, Button, Box, CircularProgress } from '@mui/material'
 import AvatarCard from './components/AvatarCard'
 
 export const avatarQuery = gql`
@@ -30,7 +30,14 @@ function App() {
   })
 
   // Adding loading page animation
-  if (loading) return <LinearProgress color="success" />
+  if (loading) return (<div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      ><CircularProgress color="success" size="6rem" /></div>)
   if (error) return <div>error</div>
 
   //load More function to fetch more data on button click
