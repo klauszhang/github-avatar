@@ -4,8 +4,8 @@ import { Container, Grid } from '@mui/material'
 import AvatarCard from './components/AvatarCard'
 
 export const avatarQuery = gql`
-  query MarketPlaceQuery {
-    marketplaceListings(first: 40) {
+  query MarketPlaceQuery($cursor: String, $first: Int = 40) {
+    marketplaceListings(first: $first, after: $cursor) {
       edges {
         cursor
         node {
@@ -15,12 +15,19 @@ export const avatarQuery = gql`
           shortDescription
         }
       }
+      # GQL pagination
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `
 
 function App() {
-  const { loading, error, data } = useQuery(avatarQuery)
+  const { loading, error, data, fetchMore } = useQuery(avatarQuery, {
+    variables: { cursor: null, first: 40 },
+  })
 
   if (loading) return <div>loading...</div>
   if (error) return <div>error</div>
