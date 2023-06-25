@@ -32,7 +32,9 @@ function App() {
     variables: { cursor: null, first: 40 },
   })
 
+  // Custom loading state to show skeleton UI at correct time
   const [isLoadingMore, setIsLoadingMore] = useState(false)
+
   const loader = useRef(null)
 
   const fetchMoreCallback = useCallback(() => {
@@ -61,26 +63,32 @@ function App() {
 
   useInfiniteScroll(loader, fetchMoreCallback)
 
-  if (loading) return <div>loading...</div>
+  // Todo: Add useful error handling UI
   if (error) return <div>error</div>
 
   return (
     <Container maxWidth="xl">
       <Grid container columnSpacing={2} rowSpacing={4}>
-        {data.marketplaceListings.edges.map((d: any) => {
-          const { logoUrl, logoBackgroundColor, name, shortDescription } =
-            d.node
-          return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={d.cursor}>
-              <AvatarCard
-                cardName={name}
-                imgUrl={logoUrl}
-                imgBgColor={logoBackgroundColor}
-                description={shortDescription}
-              />
-            </Grid>
-          )
-        })}
+        {loading && !data // If it's loading and data is still not there (initial load)
+          ? Array.from({ length: 12 }).map((_, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <AvatarCardSkeleton />
+              </Grid>
+            ))
+          : data.marketplaceListings.edges.map((d: any) => {
+              const { logoUrl, logoBackgroundColor, name, shortDescription } =
+                d.node
+              return (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={d.cursor}>
+                  <AvatarCard
+                    cardName={name}
+                    imgUrl={logoUrl}
+                    imgBgColor={logoBackgroundColor}
+                    description={shortDescription}
+                  />
+                </Grid>
+              )
+            })}
 
         {/* Intersection Obeserver Element  */}
         <div ref={loader} />
