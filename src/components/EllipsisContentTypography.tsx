@@ -10,7 +10,7 @@ interface EllipsisContentTypographyProps extends TypographyProps {
 
 const EllipsisContentTypography = styled(
   Typography
-)<EllipsisContentTypographyProps>(({ theme, lines }) => ({
+)<EllipsisContentTypographyProps>(({ lines }) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   display: '-webkit-box',
