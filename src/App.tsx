@@ -3,7 +3,8 @@ import { gql } from '@apollo/client'
 import { Container, Grid } from '@mui/material'
 import AvatarCard from './components/AvatarCard'
 import useInfiniteScroll from './hooks/useInfiniteScroll'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import AvatarCardSkeleton from './components/AvatarCardSkeleton'
 
 export const avatarQuery = gql`
   query MarketPlaceQuery($cursor: String, $first: Int = 40) {
@@ -31,15 +32,18 @@ function App() {
     variables: { cursor: null, first: 40 },
   })
 
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const loader = useRef(null)
 
   const fetchMoreCallback = useCallback(() => {
     if (data && data.marketplaceListings.pageInfo.hasNextPage) {
+      setIsLoadingMore(true)
       fetchMore({
         variables: {
           cursor: data.marketplaceListings.pageInfo.endCursor,
         },
         updateQuery: (prev, { fetchMoreResult }) => {
+          setIsLoadingMore(false)
           if (!fetchMoreResult) return prev
           return {
             marketplaceListings: {
@@ -80,6 +84,14 @@ function App() {
 
         {/* Intersection Obeserver Element  */}
         <div ref={loader} />
+
+        {isLoadingMore
+          ? Array.from({ length: 20 }).map((_, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <AvatarCardSkeleton />
+              </Grid>
+            ))
+          : null}
       </Grid>
     </Container>
   )
