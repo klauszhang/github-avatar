@@ -67,7 +67,7 @@ function App() {
   if (error) return <div>error</div>
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ py: 3 }}>
       <Grid container columnSpacing={2} rowSpacing={4} alignItems="stretch">
         {loading && !data // If it's loading and data is still not there (initial load)
           ? Array.from({ length: 12 }).map((_, index) => (
