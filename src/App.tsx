@@ -68,7 +68,7 @@ function App() {
 
   return (
     <Container maxWidth="xl">
-      <Grid container columnSpacing={2} rowSpacing={4}>
+      <Grid container columnSpacing={2} rowSpacing={4} alignItems="stretch">
         {loading && !data // If it's loading and data is still not there (initial load)
           ? Array.from({ length: 12 }).map((_, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
