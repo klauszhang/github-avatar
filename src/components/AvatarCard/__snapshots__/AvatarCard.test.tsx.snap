@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AvatarCard 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root css-1q1eqzk-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiBox-root css-7h59a4"
+    >
+      <img
+        alt="card name"
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-4wvnlr-MuiCardMedia-root"
+        src="imgUrl"
+      />
+    </div>
+    <div
+      class="MuiCardContent-root css-1fp245t-MuiCardContent-root"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        <h6
+          class="MuiTypography-root MuiTypography-h6 css-1tpu4y-MuiTypography-root"
+          lines="2"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-17sj1r4-MuiTypography-root-MuiLink-root"
+            href="url"
+            rel="noreferrer"
+            target="_blank"
+          >
+            card name
+          </a>
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+`;

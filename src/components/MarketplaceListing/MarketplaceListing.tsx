@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material'
-import AvatarCard from '../AvatarCard'
+import AvatarCard from '../AvatarCard/AvatarCard'
 import { useGetAvatarQuery } from '../../hooks/useGetAvatarQuery'
 import CircularProgress from '@mui/material/CircularProgress';
 import * as styles from './MarketplaceListing.styles'
