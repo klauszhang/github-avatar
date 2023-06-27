@@ -17,7 +17,5 @@ export const useGetAvatarQuery = () => {
     }
   `
 
-  return useQuery(avatarQuery, {
-    variables: { cursor: null },
-  })
+  return useQuery(avatarQuery)
 }
